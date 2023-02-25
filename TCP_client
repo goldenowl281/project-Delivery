@@ -1,4 +1,35 @@
-import  socket
+# import  socket
+# import delivery
+
+# class Client:
+#     def __init__(self,client_sms):
+#         self.target_host ='localhost'
+#         self.target_port = 9999
+#         self.ClientMessage =bytes(client_sms,'utf-8')
+
+#     def runClient(self):
+#         client=socket.socket(socket.AF_INET , socket.SOCK_STREAM)
+#         client.connect((self.target_host,self.target_port))
+
+#         client.send(self.ClientMessage)
+
+#         recvFromServer=client.recv(4096)
+#         print(f'Back received from server: {recvFromServer.decode("utf-8")}')
+#         client.close()
+
+#     def option(self):
+#           print("PRESS 1: TO Create Account")
+#           print("PRESS 2: TO Sign-In Account")
+#           print("PRESS 3: TO  Show Menu")
+#           option1=input("ENTER OPTION_:-")
+
+# if __name__=="__main__":
+#     while True:
+#         Clientsms = input("Enter data to send>:")
+#         tcpClient=Client(Clientsms)
+#         tcpClient.runClient()
+
+import socket
 
 class Client:
     def __init__(self,client_sms):
@@ -13,11 +44,23 @@ class Client:
         client.send(self.ClientMessage)
 
         recvFromServer=client.recv(4096)
-        print(f'Back received from server: {recvFromServer.decode("utf-8")}')
+        print(f'Back received from server: {recvFromServer.decode("utf-8")}')        
         client.close()
 
+    def option(self):
+        print("\nPRESS 1: TO Create Account")
+        print("PRESS 2: TO Sign-In Account")
+        print("PRESS 3: TO  Show Menu")
+        option1=input("ENTER OPTION_:-")
+        return option1
+
+    def main(self):
+        while True:
+            sms = self.option()
+            tcpClient=Client(sms)
+            tcpClient.runClient()
+            
+
 if __name__=="__main__":
-    while True:
-        Clientsms = input("Enter data to send>:")
-        tcpClient=Client(Clientsms)
-        tcpClient.runClient()
+    MyClient = Client("hello")
+    MyClient.main()
