@@ -43,8 +43,18 @@ class Client:
 
         client.send(self.ClientMessage)
 
-        recvFromServer=client.recv(4096)
-        print(f'Back received from server: {recvFromServer.decode("utf-8")}')        
+        recvFromServer=client.recv(4096).decode("utf-8")
+        splt = recvFromServer.split("#")
+        listA =[]
+        for a in splt:
+            b=  input(a)
+            listA.append(b)
+        print(listA)
+        changeStr = '#'.join(map(str, listA))
+        changeByte = bytes (changeStr, 'utf-8')
+        client.send(changeByte)
+
+        # print(f'Back received from server: {recvFromServer.decode("utf-8")}')        
         client.close()
 
     def option(self):
