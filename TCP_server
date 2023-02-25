@@ -1,5 +1,8 @@
 import socket
 import threading
+import delivery
+import testfile
+
 class TCPserver():
     def __init__(self):
         self.server_ip='localhost'
@@ -19,11 +22,31 @@ class TCPserver():
         with client_socket as sock:
             request = sock.recv(1024)
             print(f'[*] Received: {request.decode("utf-8")}')
+            typeData= request.decode("utf-8")
+            print("type Data->",type(typeData))
+            changeTdata = int(typeData)
+            print(changeTdata)
+            print(typeData)
             # sock.send(b'ACK')
-            toSend=bytes(request)
-            sock.send(toSend)
 
+            if  changeTdata== '3':
+                # dataTest=self.test_fun()
+                obj =delivery.mongodatabase()
+                dataTest = obj.showMenu
+                print(type(dataTest))               
+                sock.send(dataTest.encode())
 
+            if changeTdata == '2':
+                dataTest1 = testfile.sign_upAccount()
+                sock.send(dataTest1.encode())
+                
+                
+            
+
+    def test_fun (self):
+        data=("testing KhantKOKO cat MOuntain")
+        return data
+        
 if __name__ == '__main__':
     Myserver = TCPserver()
     Myserver.main()
