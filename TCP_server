@@ -3,15 +3,19 @@ import threading
 import delivery
 import testfile
 
+
 class TCPserver():
     def __init__(self):
         self.server_ip='localhost'
         self.server_port = 9999
+        self.server = None
+
     def main(self):
         server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
         server.bind((self.server_ip, self.server_port))
         server.listen(1)
         print(f'[*] Listening on {self.server_ip}:{self.server_port}')
+
         while True:
             client, address = server.accept()
             print(f'[*] Accepted connection from {address[0]}:{address[1]}')
@@ -24,21 +28,66 @@ class TCPserver():
             print(f'[*] Received: {request.decode("utf-8")}')
             typeData= request.decode("utf-8")
             print("type Data->",type(typeData))
-            changeTdata = int(typeData)
-            print(changeTdata)
+            # changeTdata = int(typeData)
+            # print(changeTdata)
             print(typeData)
-            # sock.send(b'ACK')
+            #sock.send(b'ACK')
 
-            if  changeTdata== '3':
+            if  typeData== '3':
+                print("data3")
                 # dataTest=self.test_fun()
                 obj =delivery.mongodatabase()
                 dataTest = obj.showMenu
                 print(type(dataTest))               
                 sock.send(dataTest.encode())
 
-            if changeTdata == '2':
+            elif typeData == '1':
+                print("data2")
                 dataTest1 = testfile.sign_upAccount()
                 sock.send(dataTest1.encode())
+                rec_data_from_client = sock.recv(1024).decode('utf-8')
+                print(rec_data_from_client)
+                print(type(rec_data_from_client))
+
+                obj3 = delivery.mongodatabase()
+                id_order= obj3.client['Delivery_database']['User_collection']
+                count = id_order.count_documents({})+1
+                print(count)
+                
+
+                splitDt = rec_data_from_client.split('#')
+                print(splitDt)
+                splitDt.insert(0, count)
+                list2 = ['_id','userName','password','phoneNumber']
+                zipData= zip(list2, splitDt)
+                print(zipData)
+                zD=dict(zipData)
+                print(zD)
+                
+                obj3.collection_1.insert_one(zD)
+
+            elif typeData =='2':
+                print("data1")
+                dataTest2 = testfile.loginAcc()
+                sock.send(dataTest2.encode())
+                rec_data_from_client = sock.recv(1024).decode('utf-8')
+                print(rec_data_from_client)
+                print(type(rec_data_from_client))
+                
+                
+                
+
+                splitDt = rec_data_from_client.split("#")
+                print(splitDt)
+                # splitDt.insert(0, count)
+                list2 = ['userName','password','phoneNumber']
+                zipData = zip(list2, splitDt)
+                print(zipData)
+                zD = dict(zipData)
+                print(zD)
+
+
+
                 
                 
             
