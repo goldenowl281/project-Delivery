@@ -1,57 +1,99 @@
+import pymongo
 from pymongo import MongoClient
 import socket
 
-class mongodatabase:  
-     try:          
-            client = MongoClient()
-            client = MongoClient('localhost', 27017)       
-            db = client['Delivery_database']  
 
-            collection = db['shop-collection']  
-            collection_1 =db['User_collection']
+class Mongodatabase:
+    try:
+        clients = MongoClient('localhost', 27017)
+        db = clients['Delivery']
 
-            print("connection success")      
-     except Exception as error:
-            print(error)
+        collection = db['shop-collection']
+        collection_1 = db['User_collection']
 
+        print("connection success")
+    except Exception as error:
+        print(error)
 
-     def __init__(self):
-        
-        data = [          
-            {"_id": 1, "Shop Name": "Tea shop", "food": ["fired green", "Thai soup", "squid salad", "fry chicken", "Malashankaw","Cheese Burger","SandWich"], "drink": ["Tea","Americano","Chocolate Shake","Strawberry Juice"] },
-            {"_id": 2, "Shop Name": "Pan Ei", "food": ["Fried Assorted Vegitables","BeanPasteRice"], "drink": ["LemonTea","JuicyJuice"]},    
-            {"_id": 3, "Shop Name": "FuDo Bakery", "food": ["Burger"], "drink": ["SpecialYogurd","FreshJuice"]},
-            {"_id": 4, "Shop Name": "Shwe kaungkin", "food": ["SpoonPlane","FriedGreens"], "drink": ["PapayaJuice","LemonJuice"]},      
-            {"_id": 5, "Shop Name": "TeaPro", "food": ["FriedRice","TwelveSoups"], "drink": ["AppleJuice","OrangeJuice"]},
+    def __init__(self):
+        data = {"_id": 2, "name": "sithu", "phoneNumber": 959970244289, "email": "sithu@gmail.com",
+                "password": "sithuaung"}
+        # try:
+        #     self.collection_1.insert_one(data)
+        #     print("insert successful")
+        # except Exception as error:
+        #     print(error)
+
+        # def option(self):
+        #     chooseOption = "PRESS 1: TO Create Account--:#nPRESS 2: TO Sign_in Account--:#PRESS 3: To Show Menu--:"
+        #     return chooseOption
+
+        # Press 2: Sea Foods--:# Press 3: BBQ--# PRESS 4: " \
+        # "Cakes--:# PRESS 5: Foods--:# PRESS 6: show all menu--:"
+        data1 = [
+            {
+                "_id": 1, "Shop Name": "PanEi",
+                "soft drink": [
+                    {"name": "coke", "price": 2000},
+                    {"name": "sprite", "price": 2000},
+                    {"name": "lemonade", "price": 2000},
+                    {"name": "Iced Tea", "price": 2000}
+                ],
+                "foods": [
+                    {"name": "shan noodle", "price": 3000},
+                    {"name": "coconut chicken noodle", "price": 3000},
+                    {"name": "chicken curry", "price": 5000}
+                ]
+            },
+            {
+                "_id": 2, "Shop Name": "TeaPro",
+                "soft drink": [
+                    {"name": "Apple Juice", "price": 3000},
+                    {"name": "GrapeFruit Juice", "price": 3000},
+                    {"name": "Hot Chocolate", "price": 4000}
+                ],
+                "foods": [
+                    {"name": "NanGyi Toke", "price": 3000},
+                    {"name": "Mohinga", "price": 2000},
+                    {"name": "chicken liver & Gizzard", "price": 5000}
+                ]
+            },
+            {
+                "_id": 3, "Shop Name": "OceanWave",
+                "Sea Foods": [
+                    {"name": "Fish and Chips", "price": 7000},
+                    {"name": "Crab Meat", "price": 10000},
+                    {"name": "Salmon", "price": 10000}
+                ],
+                "BBQ": [
+                    {"name": "BBQ special", "price": 20000},
+                    {"name": "Spicy Beef Bomb", "price": 20000},
+                    {"name": "Chicken Wings", "price": 10000}
+                ]
+            },
+            {
+                "_id": 4, "Shop Name": "FudoBakery",
+                "Cakes": [
+                    {"name": "Butter Cake", "price": 2000},
+                    {"name": "Chick-pea Cake", "price": 5000},
+                    {"name": "Cheese-Topping Cake", "price": 5000}
+                ],
+                "soft drink": [
+                    {"name": "Strawberry Delight", "price": 3000},
+                    {"name": "Ice Thai Tea", "price": 3000},
+                    {"name": "Faluda", "price": 4000},
+                    {"name": "Burbble Milktea", "price": 3000},
+                    {"name": "Blueberry Delight", "price": 3000}
+                ]
+            }
         ]
-        data_1 = [
-          { "_id":1, "user_name": "sithu", "password":"11111", "phone_number":"959970244289" ,"email":"sithu@gmail.com" },
-          { "_id":2, "user_name": "AungKaungSet", "password":"22222", "phone_number":"959966760561","email":"aungkaungset@gmail.com" },
-          { "_id":3, "user_name": "khantKoKo", "password":"33333", "phone_number":"959975668931" ,"email":"khantkoko@gmail.com" },
-          { "_id":4, "user_name": "ThazinNaing", "password":"44444", "phone_number":"959774820322", "email":"thanhlaing@gmail.com"}      
-    ]
-        try:        
-            # self.collection.drop()
-            # self.collection.insert_many(data)
-              
-            # self.collection_1.drop()
-            # self.collection_1.insert_many(data_1)
-            print("insert successful")        
-        except Exception as error:
-                print(error)
-          
-        
-     def showMenu (self):
-        #   find = self.collection.find({},{'Shop Name':1,'_id':0})
-        #   changeStrng = '\n'.join(map(str, find))
-          find1 = self.collection_1.find({},{'user_name':1,'_id':0})
-          changeStrng1 = '\n'.join(map(str, find1))
+        # try:
+        #     self.collection.drop()
+        #     self.collection.insert_many(data1)
+        #     print("insert successful")
+        # except Exception as error:
+        #     print(error)
 
-          return changeStrng1
-     
-    
-      
 
 if __name__ == "__main__":
-     obj = mongodatabase()
-     obj.option()
+    obj = Mongodatabase()
